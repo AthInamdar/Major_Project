@@ -1,0 +1,66 @@
+{
+  "expo": {
+    "name": "NiyatKalpa",
+    "slug": "niyatkalpa",
+    "version": "1.0.0",
+    "entryPoint": "./index.js",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "scheme": "niyatkalpa",
+    "ios": {
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "YOUR_IOS_GOOGLE_MAPS_API_KEY"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "YOUR_ANDROID_GOOGLE_MAPS_API_KEY"
+        }
+      },
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "CAMERA"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow NiyatKalpa to use your location to find nearby pharmacies."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow NiyatKalpa to access your camera to scan medicine labels."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you upload medicine labels.",
+          "cameraPermission": "The app accesses your camera to let you take photos of medicine labels."
+        }
+      ]
+    ]
+  }
+}

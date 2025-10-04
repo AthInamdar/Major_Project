@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users collection
+    match /users/{userId} {
+      // Users can read & write their own document
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // Public can read pharmacist profiles with a location
+      allow read: if resource.data.role == 'pharmacist' && resource.data.location != null;
+
+      // Validate user data structure on create/update
+      allow create, update: if request.auth != null &&
+                               request.auth.uid == userId &&
+                               request.resource.data.keys().hasAll(['uid', 'role', 'name', 'email', 'createdAt']) &&
+                               request.resource.data.role in ['pharmacist', 'user'] &&
+                               request.resource.data.uid == request.auth.uid;
+    }
+
+    // Medicines collection
+    match /medicines/{medicineId} {
+      // Anyone can read active medicines
+      allow read: if resource.data.status == 'active';
+
+      // Pharmacists can create medicines
+      allow create: if request.auth != null &&
+                       request.resource.data.pharmacyId == request.auth.uid &&
+                       request.resource.data.keys().hasAll(['name', 'batchNo', 'manufacturer', 'expiryDate', 'mrp', 'price', 'quantity', 'pharmacyId', 'pharmacyName', 'geo', 'status']) &&
+                       request.resource.data.status in ['active', 'paused', 'soldout'];
+
+      // Pharmacists can update their own medicines
+      allow update: if request.auth != null &&
+                       resource.data.pharmacyId == request.auth.uid &&
+                       request.resource.data.pharmacyId == request.auth.uid;
+
+      // Pharmacists can delete their own medicines
+      allow delete: if request.auth != null &&
+                       resource.data.pharmacyId == request.auth.uid;
+    }
+
+    // Carts collection
+    match /carts/{userId} {
+      // Users can manage their own cart
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Block everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
