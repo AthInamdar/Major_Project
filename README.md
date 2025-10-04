@@ -1,6 +1,6 @@
 # NiyatKalpa 🏥
 
-**Redistributing near-expiry medicines at reduced prices, improving access while cutting medical waste.**
+**A Mobile Application for Redistributing Near-Expiry Medicines**
 
 NiyatKalpa is a React Native mobile app built with Expo that connects pharmacists with users to redistribute safe, near-expiry medicines at affordable prices. The app features OCR-based medicine scanning, smart pricing recommendations, location-based listings, and an AI chat assistant.
 
